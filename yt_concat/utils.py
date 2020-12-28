@@ -10,10 +10,6 @@ class Utils:
         pass
 
     @staticmethod
-    def get_video_id(url):
-        return url.split('watch?v=')[-1]
-
-    @staticmethod
     def create_dirs():
         os.makedirs(DOWNLOADS_DIR, exist_ok=True)
         os.makedirs(CAPTIONS_DIR, exist_ok=True)
@@ -27,12 +23,12 @@ class Utils:
         filepath = self.get_video_list_filepath(channel_id)
         return os.path.exists(filepath) and os.path.getsize(filepath) > 0
 
-    def get_caption_filepath(self, url):
-        return os.path.join(CAPTIONS_DIR, self.get_video_id(url) + '.txt')
+    def get_caption_filepath(self, yt):
+        return os.path.join(CAPTIONS_DIR, yt.url + '.txt')
 
     def caption_file_exists(self, url):
         filepath = self.get_caption_filepath(url)
         return os.path.exists(filepath) and os.path.getsize(filepath) > 0
 
-    def get_video_filepath(self, url):
-        return os.path.join(VIDEOS_DIR, self.get_video_id(url))
+    def get_video_filepath(self, yt):
+        return os.path.join(VIDEOS_DIR, yt.url)
