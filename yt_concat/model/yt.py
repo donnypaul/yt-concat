@@ -7,7 +7,7 @@ class YT:
     def __init__(self, url):
         self.url = url
         self.id = self.get_video_id()
-        self.captions = self.get_video_captions()
+        self.captions = self.get_video_captions()  #All captions in a video
 
     def get_video_id(self):
         return self.url.split('watch?v=')[-1]

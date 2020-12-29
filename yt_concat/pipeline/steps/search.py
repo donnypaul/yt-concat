@@ -11,7 +11,7 @@ class Search(Step):
                 continue
             for caption in yt.captions:
                 if search_word in caption['text']:
-                    f = Found(yt.url, caption)
+                    f = Found(yt, caption)
                     found.append(f)
         print(found)
         return found
