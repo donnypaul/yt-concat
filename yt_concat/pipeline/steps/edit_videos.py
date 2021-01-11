@@ -4,7 +4,7 @@ from .step import Step
 
 
 class EditVideos(Step):
-    def process(self, data, inputs, utils):
+    def process(self, data, inputs, utils, logger):
         channel_id = inputs['channel_id']
         search_word = inputs['search_word']
         videos = []
@@ -21,3 +21,4 @@ class EditVideos(Step):
         final_video = concatenate_videoclips(videos)
         output_filepath = utils.get_output_video_filepath(channel_id, search_word)
         final_video.write_videofile(output_filepath)
+        return data

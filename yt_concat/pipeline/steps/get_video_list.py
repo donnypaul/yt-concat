@@ -7,10 +7,11 @@ from yt_concat.pipeline.steps.step import StepException
 
 class GetVideoList(Step):
 
-    def process(self, data, inputs, utils):
+    def process(self, data, inputs, utils, logger):
         channel_id = inputs['channel_id']
-        if utils.video_list_file_exists(channel_id):
-            print('Found video list file for channel ID:', channel_id)
+        fast = inputs['fast']
+        if utils.video_list_file_exists(channel_id) and fast:
+            logger.info(f'Found video list file for channel ID: {channel_id}')
             return self.read_file(utils.get_video_list_filepath(channel_id))
 
         base_video_url = 'https://www.youtube.com/watch?v='

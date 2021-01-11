@@ -6,25 +6,26 @@ from .step import Step
 
 
 class DownloadVideos(Step):
-    def process(self, data, inputs, utils):
+    def process(self, data, inputs, utils, logger):
 
         video_links = []
         video_ids = []
         for found in data:
             url = found.yt.url
             video_id = found.yt.id
-            if utils.video_file_exists(url):
-                print(f'found video {video_id}.mp4')
+            fast = inputs['fast']
+            if utils.video_file_exists(video_id) and fast:
+                logger.info(f'found video {video_id}.mp4')
                 continue
             video_links.append(url)
             video_ids.append(video_id)
-
+            # YouTube(url).streams.first().download(output_path=VIDEOS_DIR, filename=video_id) #without concurrent
         start = time.time()
         with concurrent.futures.ProcessPoolExecutor() as executor:
             for video in executor.map(self.download, video_links, video_ids):
-                print('downloading:', video)
+                logger.info(f'downloading: video')
         end = time.time()
-        print('It took', (end - start) / 60, 'minutes to download all videos.')
+        logger.info(f'It took {(end - start) / 60} minutes to download all videos.')
         return data
 
     @staticmethod

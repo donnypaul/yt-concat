@@ -4,8 +4,9 @@ from youtube_transcript_api import NoTranscriptFound
 
 
 class YT:
-    def __init__(self, url):
+    def __init__(self, url, logger):
         self.url = url
+        self.logger = logger
         self.id = self.get_video_id()
         self.captions = self.get_video_captions()  #All captions in a video
 
@@ -17,5 +18,5 @@ class YT:
             return YouTubeTranscriptApi.get_transcript(self.id)
 
         except (TranscriptsDisabled, NoTranscriptFound):
-            print('English subtitles are not available for', self.url)
+            self.logger.warning(f'English subtitles are not available for {self.url}')
             return 0

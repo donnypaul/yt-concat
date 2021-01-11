@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from yt_concat.settings import CAPTIONS_DIR
 from yt_concat.settings import VIDEOS_DIR
@@ -28,11 +29,16 @@ class Utils:
     def get_video_filepath(video_id):
         return os.path.join(VIDEOS_DIR, video_id + '.mp4')
 
-    def video_file_exists(self, url):
-        filepath = self.get_video_filepath(url)
+    def video_file_exists(self, video_id):
+        filepath = self.get_video_filepath(video_id)
         return os.path.exists(filepath) and os.path.getsize(filepath) > 0
 
     @staticmethod
     def get_output_video_filepath(channel_id, search_word):
         filename = channel_id + '_' + search_word + '.mp4'
         return os.path.join(OUTPUT_DIR, filename)
+
+    @staticmethod
+    def remove_dirs():
+        shutil.rmtree(VIDEOS_DIR, ignore_errors=True)
+
